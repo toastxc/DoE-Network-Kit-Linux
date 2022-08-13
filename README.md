@@ -5,4 +5,5 @@ A script for implementing security certificates from Shenton College and the Dep
 
 # Usage
 
+`git clone https://github.com/toastxc/SC-Network-Kit-Linux.git | sh`
 
