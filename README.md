@@ -7,3 +7,9 @@ A script for implementing security certificates from Shenton College and the Dep
 
 `git clone https://github.com/toastxc/SC-Network-Kit-Linux.git | sh SC-Network-Kit-Linux/main.sh`
 
+
+# Dependancies
+```
+OpenSSL
+Curl
+CoreUtils
