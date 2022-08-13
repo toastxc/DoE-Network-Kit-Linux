@@ -15,3 +15,6 @@ sudo sh main.sh
 `OpenSSL
 Curl
 CoreUtils`
+
+# For Fedora Users
+It is recommended that you also run the Fedora network script, it can be found here
