@@ -8,8 +8,10 @@ A script for implementing security certificates from Shenton College and the Dep
 ```
 git clone https://github.com/toastxc/SC-Network-Kit-Linux.git
 cd SC-Network-Kit-Linux/
-sudo sh main.sh
+sudo sh temp.sh
 ```
+__The file is named 'temp' because it is not yet tested__
+
 
 # Dependancies
 - OpenSSL
