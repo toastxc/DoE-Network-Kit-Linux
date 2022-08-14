@@ -12,6 +12,10 @@ if [[ $wifiadapt = "" ]]; then
 	exit
 fi
 
+if (($OSTYPE != "linux-gnu")); then
+	echo "this script is for GNU/Linux only:"
+	exit
+fi
 
 ############################################### WIFI SETTINGS ######################################################
 
@@ -157,10 +161,6 @@ fi
 systemctl restart NetworkManager
 
 ########################################### FEDORA NETWORKING #####################################################
-if (($OSTYPE != "linux-gnu")); then
-	echo "this script is for GNU/Linux only:"
-	exit
-fi
 
 DNF=$(ls /etc/ | grep dnf);
 
