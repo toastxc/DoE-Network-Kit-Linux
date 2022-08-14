@@ -16,6 +16,7 @@ sudo sh main.sh
 - Curl
 - CoreUtils
 - Git
+- NetworkManager
 
 # For Fedora Users
 An update will be automatically applied for Fedora's networking, it can be found here:
