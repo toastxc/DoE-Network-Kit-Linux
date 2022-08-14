@@ -19,4 +19,4 @@ sudo sh main.sh
 
 # For Fedora Users
 An update will be automatically applied for Fedora's networking, it can be found here:
-
+https://github.com/toastxc/Fedora-Network-Fix
