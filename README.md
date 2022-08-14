@@ -17,4 +17,5 @@ Curl
 CoreUtils`
 
 # For Fedora Users
-It is recommended that you also run the Fedora network script, it can be found here
+An update will be automatically applied for Fedora's networking, it can be found here:
+
