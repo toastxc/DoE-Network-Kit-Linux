@@ -5,6 +5,13 @@ if (( $EUID != 0 )); then
         exit
 fi
 
+wifiadapt=$(ls /sys/class/net  | grep w)
+
+if [[ $wifiadapt = "" ]]; then
+	echo "no wifi compatible devie found"
+	exit
+fi
+
 
 ############################################### WIFI SETTINGS ######################################################
 
@@ -60,7 +67,7 @@ id=WIRELESS-2.4\n
 uuid=ac9c73e7-783d-46f9-a10a-936807a87d08\n
 type=wifi\n
 autoconnect=$autoconnect\n
-interface-name=wlp8s0\n
+interface-name=wifiadapt\n
 \n
 [wifi]\n
 mode=infrastructure\n
