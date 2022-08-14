@@ -1,4 +1,3 @@
-
 echo "Shenton Cert Kit"
 echo "If you are not attending Shenton College DO NOT RUN THIS SCRIPT"
 
@@ -38,4 +37,13 @@ else
 	curl -O --output-dir  https://certs.education.wa.edu.au/education-pki/cert/Education-SubCA2.cer
 	openssl x509 -in certs/Education-SubCA2.cer -out system-cert/Education-SubCA2.pem
 	sudo cp system-cert/Education-SubCA2.pem /etc/certs/
+fi
+
+Fedora=$(cat /etc/os-release | grep 'NAME="Fedora Linux"')
+
+if [[ $Fedora = 'NAME="Fedora Linux"' ]]; then
+
+	git clone https://github.com/toastxc/Fedora-Network-Fix.git
+	sudo sh Fedora-Network-Fix/main.sh
+
 fi
