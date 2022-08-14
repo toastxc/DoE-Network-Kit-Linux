@@ -12,9 +12,9 @@ sudo sh main.sh
 ```
 
 # Dependancies
-`OpenSSL
-Curl
-CoreUtils`
+- OpenSSL
+- Curl
+- CoreUtils
 
 # For Fedora Users
 An update will be automatically applied for Fedora's networking, it can be found here:
