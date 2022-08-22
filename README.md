@@ -20,7 +20,7 @@ A script for implementing security certificates from the Australian Department o
 cd Downloads/
 unzip -q DoE-Network-Kit-Linux-main.zip
 cd DoE-Network-Kit-Linux-main
-sudo sh <script>
+sudo sh generic.sh
 ```
 Choose the script that matches your school
 
