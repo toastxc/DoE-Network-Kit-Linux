@@ -27,3 +27,4 @@ https://github.com/toastxc/Fedora-Network-Fix
 There are a few rules for contributing to this project
 - Never package certificates, only downlaod them from restricted repositories
 - Keep this repository private
+- Don't add too much detail to commit change description 
