@@ -16,8 +16,7 @@ __The file is named 'temp' because it is not yet tested__
 # Dependancies
 - OpenSSL
 - Curl
-- CoreUtils
-- Git
+- Git (Optional)
 - NetworkManager
 
 # For Fedora Users
