@@ -6,7 +6,10 @@ A script for implementing security certificates from the Australian Department o
 # Usage
 
 ```
-cd Downloads/DoE-Network-Kit-Linux
+ 
+cd Downloads/
+unzip -q DoE-Network-Kit-Linux.zip
+cd DoE-Network-Kit-Linux.zip
 sudo sh <script>
 ```
 Choose the script that matches your school
