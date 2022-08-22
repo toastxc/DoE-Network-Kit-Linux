@@ -1,5 +1,5 @@
 # DoE-Network-Kit-Linux
-A script for implementing security certificates from the Department of Education
+A script for implementing security certificates from the Australian Department of Education into Linux
 
 **THIS REPOSITORY WAS NOT MADE BY OR AUTHORISED BY THE DEPARTMENT OF EDUCATION, SOFTWARE COMES WITH ABSOLUTELY NO WARRENTY**
 
@@ -25,5 +25,5 @@ https://github.com/toastxc/Fedora-Network-Fix
 
 # For contributors
 There are a few rules for contributing to this project
-- never package certificates, only downlaod them from restricted repositories
-- keep this repository private
+- Never package certificates, only downlaod them from restricted repositories
+- Keep this repository private
