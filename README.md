@@ -8,8 +8,8 @@ A script for implementing security certificates from the Australian Department o
 ```
  
 cd Downloads/
-unzip -q DoE-Network-Kit-Linux.zip
-cd DoE-Network-Kit-Linux.zip
+unzip -q DoE-Network-Kit-Linux-main.zip
+cd DoE-Network-Kit-Linux-main
 sudo sh <script>
 ```
 Choose the script that matches your school
