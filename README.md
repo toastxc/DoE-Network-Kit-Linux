@@ -1,15 +1,15 @@
-# SC-Network-Kit-Linux
-A script for implementing security certificates from Shenton College and the Department of Education
+# DoE-Network-Kit-Linux
+A script for implementing security certificates from the Department of Education
 
-**IF YOU ARE NOT ASSOCIATED WITH OR ATTENDING SHENTON DO NOT USE THIS PROGRAM**
+**THIS REPOSITORY WAS NOT MADE BY OR AUTHORISED BY THE DEPARTMENT OF EDUCATION, SOFTWARE COMES WITH ABSOLUTELY NO WARRENTY**
 
 # Usage
 
 ```
-cd Downloads/SC-Network-Kit-Linux/
-sudo sh temp.sh
+cd Downloads/DoE-Network-Kit-Linux
+sudo sh <script>
 ```
-
+Choose the script that matches your school
 
 
 # Dependancies
