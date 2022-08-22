@@ -43,6 +43,8 @@ usernamecheck=$( echo $username | grep  \\. )
 
 if [[ $usernamecheck = "" ]]; then
 	echo "invalid username, try firstname.lastname"
+else
+	username=$( echo 'BLUE\'$username)
 fi
 
 if [[ $autocon = "no" ]]; then
@@ -55,8 +57,14 @@ fi
 
 touch /etc/NetworkManager/system-connections/WIRELESS-2.4.nmconnection
 
+
+interface=$(iw dev | awk '$1=="Interface"{print $2}' )
+
+echo $interface
+
+
 parse=$(cat <<EOF
-[connection]\nid=WIRELESS-2.4\nuuid=ac9c73e7-783d-46f9-a10a-936807a87d08\ntype=wifi\nautoconnect=$autoconnect\ninterface-name=wlp8s0\n\n[wifi]\nmode=infrastructure\nssid=WIRELESS-2.4\n\n[wifi-security]\nkey-mgmt=wpa-eap\n\n[802-1x]\neap=peap\n$identity$username\npassword=$password\nphase2-auth=mschapv2\n\n[ipv4]\nmethod=auto\n\n[ipv6]\naddr-gen-mode=stable-privacy\nmethod=auto\n\n[proxy]
+[connection]\nid=WIRELESS-2.4\nuuid=ac9c73e7-783d-46f9-a10a-936807a87d08\ntype=wifi\nautoconnect=$autoconnect\ninterface-name=$interface\n\n[wifi]\nmode=infrastructure\nssid=WIRELESS-2.4\n\n[wifi-security]\nkey-mgmt=wpa-eap\n\n[802-1x]\neap=peap\n$username\npassword=$password\nphase2-auth=mschapv2\n\n[ipv4]\nmethod=auto\n\n[ipv6]\naddr-gen-mode=stable-privacy\nmethod=auto\n\n[proxy]
 EOF
 )
 
