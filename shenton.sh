@@ -44,7 +44,7 @@ usernamecheck=$( echo $username | grep  \\. )
 if [[ $usernamecheck = "" ]]; then
 	echo "invalid username, try firstname.lastname"
 else
-	username=$( echo 'BLUE\'$username)
+	username=$( echo 'identity=BLUE\'$username)
 fi
 
 if [[ $autocon = "no" ]]; then
