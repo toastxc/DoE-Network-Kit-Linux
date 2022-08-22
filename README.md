@@ -21,3 +21,9 @@ Choose the script that matches your school
 # For Fedora Users
 An update will be automatically applied for Fedora's networking, it can be found here:
 https://github.com/toastxc/Fedora-Network-Fix
+
+
+# For contributors
+There are a few rules for contributing to this project
+- never package certificates, only downlaod them from restricted repositories
+- keep this repository private
