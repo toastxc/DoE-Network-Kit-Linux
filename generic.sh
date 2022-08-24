@@ -12,20 +12,6 @@ echo "WIFI"
 
 # wifi section 
 
-Wificonf=$(ls /etc/NetworkManager/system-connections/ | grep WIRELESS-2.4.nmconnection)
-
-if [[ $Wificonf = "WIRELESS-2.4.nmconnection" ]]; then
-       echo "An existing network configuration already exists for this network, do you wish to override it?"
-       echo "y/n"
-       read yorn
-
-       if [[ $yorn != "y" ]]; then 
-	       echo "Exiting..."
-	       exit
-       else
-	       echo "The old configuration will be renamed to old.WIRELESS-2.4.nmconnection"
-       fi
-fi
 
 # credentials 
 echo "Username: "
@@ -43,9 +29,9 @@ usernamecheck=$( echo $username | grep  \\. )
 
 if [[ $usernamecheck = "" ]]; then
 	echo "Invalid username, try firstname.lastname"
-else
-	username=$( echo 'identity='$username)
 fi
+
+
 
 if [[ $autocon = "no" ]]; then
 	autoconnect=$(echo "false")
@@ -63,17 +49,21 @@ interface=$(iw dev | awk '$1=="Interface"{print $2}' )
 echo $interface
 
 
-parse=$(cat <<EOF
-[connection]\nid=WIRELESS-2.4\nuuid=ac9c73e7-783d-46f9-a10a-936807a87d08\ntype=wifi\nautoconnect=$autoconnect\ninterface-name=$interface\n\n[wifi]\nmode=infrastructure\nssid=WIRELESS-2.4\n\n[wifi-security]\nkey-mgmt=wpa-eap\n\n[802-1x]\neap=peap\n$username\npassword=$password\nphase2-auth=mschapv2\n\n[ipv4]\nmethod=auto\n\n[ipv6]\naddr-gen-mode=stable-privacy\nmethod=auto\n\n[proxy]
-EOF
-)
+
+nmcli connection add \
+ipv4.method auto \
+type 802-11-wireless \
+802-11-wireless.ssid WIRELESS-2.4 \
+autoconnect $autoconnect \
+connection.interface-name $interface \
+802-1x.eap peap   \
+802-1x.password $password  \
+802-1x.identity $username \
+802-1x.phase2-auth mschapv2  \
+wifi-sec.key-mgmt wpa-eap \
+con-name WIRELESS-2.4 \
 
 
-# disable for safety
-
-touch login.info
-echo -e $parse > login.info
-echo -e $parse > /etc/NetworkManager/system-connections/WIRELESS-2.4.nmconnection
 
 nmcli connection reload
 
@@ -101,7 +91,6 @@ fi
 CA=$(ls /etc/ssl/certs | grep Education-CA);
 
 
-<< 'MULTILINE-COMMENT'
 
 Shencheck=$(curl -S https://enrol.shenton.wa.edu.au);
 
@@ -114,7 +103,6 @@ if [[ $Shencheck = "" ]]; then
 fi
 
 
-MULTILINE-COMMENT
 
 if [[ $CA = "Education-CA.pem" ]]; then
 	echo "CA cert located"
