@@ -91,13 +91,12 @@ fi
 CA=$(ls /etc/ssl/certs | grep Education-CA);
 
 
+DOECheck=$(curl -S https://certs.education.wa.edu.au/);
 
-Shencheck=$(curl -S https://enrol.shenton.wa.edu.au);
-
-echo $Shencheck
+echo $DOECheck
 
 
-if [[ $Shencheck = "" ]]; then
+if [[ $DOECheck = "" ]]; then
         echo "Could not reach certificate repository, please try connecting to your organisation's WiFi"
 	exit
 fi
