@@ -10,22 +10,7 @@ fi
 
 echo "WIFI"
 
-# wifi section 
 
-Wificonf=$(ls /etc/NetworkManager/system-connections/ | grep WIRELESS-2.4.nmconnection)
-
-if [[ $Wificonf = "WIRELESS-2.4.nmconnection" ]]; then
-       echo "a network configuration already exists for this network, are you sure that you want to override it?"
-       echo "y/n"
-       read yorn
-
-       if [[ $yorn != "y" ]]; then 
-	       echo "exiting..."
-	       exit
-       else
-	       echo "old configuration will be renamed to old.WIRELESS-2.4.nmconnection"
-       fi
-fi
 
 # credentials 
 echo "username: "
@@ -44,7 +29,7 @@ usernamecheck=$( echo $username | grep  \\. )
 if [[ $usernamecheck = "" ]]; then
 	echo "invalid username, try firstname.lastname"
 else
-	username=$( echo 'identity=BLUE\'$username)
+	username=$( echo 'BLUE\'$username)
 fi
 
 if [[ $autocon = "no" ]]; then
@@ -62,26 +47,28 @@ interface=$(iw dev | awk '$1=="Interface"{print $2}' )
 
 echo $interface
 
+nmcli connection delete 'WIRELESS-2.4'
 
-parse=$(cat <<EOF
-[connection]\nid=WIRELESS-2.4\nuuid=ac9c73e7-783d-46f9-a10a-936807a87d08\ntype=wifi\nautoconnect=$autoconnect\ninterface-name=$interface\n\n[wifi]\nmode=infrastructure\nssid=WIRELESS-2.4\n\n[wifi-security]\nkey-mgmt=wpa-eap\n\n[802-1x]\neap=peap\n$username\npassword=$password\nphase2-auth=mschapv2\n\n[ipv4]\nmethod=auto\n\n[ipv6]\naddr-gen-mode=stable-privacy\nmethod=auto\n\n[proxy]
-EOF
-)
+nmcli connection add \
+ipv4.method auto \
+type 802-11-wireless \
+802-11-wireless.ssid WIRELESS-2.4 \
+autoconnect $autoconnect \
+connection.interface-name $interface \
+802-1x.eap peap   \
+802-1x.password $password  \
+802-1x.identity $username \
+802-1x.phase2-auth mschapv2  \
+wifi-sec.key-mgmt wpa-eap \
+con-name 'WIRELESS-2.4' \
 
 
-# disable for safety
 
-touch login.info
-echo -e $parse > login.info
-echo -e $parse > /etc/NetworkManager/system-connections/WIRELESS-2.4.nmconnection
-
-nmcli connection reload
-
-sleep 1
 echo "connecting to wifi"
 nmcli connection up 'WIRELESS-2.4'
-sleep 1
 
+echo "please wait"
+wait 5s
 
 ######################################### CERTIFICATE INSTALLATION #################################################
 
@@ -107,7 +94,6 @@ SubCA1=$(ls /etc/ssl/certs | grep Education-SubCA1);
 SubCA2=$(ls /etc/ssl/certs | grep Education-SubCA2);
 
 
-<< 'MULTILINE-COMMENT'
 
 Shencheck=$(curl -S https://enrol.shenton.wa.edu.au);
 
@@ -120,7 +106,6 @@ if [[ $Shencheck = "" ]]; then
 fi
 
 
-MULTILINE-COMMENT
 
 if [[ $CA = "Education-CA.pem" ]]; then
 	echo "CA cert found"
