@@ -38,8 +38,8 @@ https://github.com/toastxc/Fedora-Network-Fix
 
 # For contributors
 There are a few rules for contributing to this project
-- Never package certificates, only downlaod them from restricted repositories
-- Keep this repository private
-- Don't add too much detail to commit change description
+- Never package certificates, only download them from restricted repositories
+- Test that modified scripts work before running a pull request
+- comment commplicated functions
 
 ![LGPLv3 Badge](/README_RESOURCES/LGPLv3%20Logo.svg)
