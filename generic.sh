@@ -40,10 +40,6 @@ else
 fi
 
 
-
-touch /etc/NetworkManager/system-connections/WIRELESS-2.4.nmconnection
-
-
 interface=$(iw dev | awk '$1=="Interface"{print $2}' )
 
 echo $interface
