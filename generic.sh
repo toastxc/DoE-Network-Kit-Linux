@@ -1,7 +1,7 @@
 ################################################## PREREQ ##########################################################
 # sudo checker
 if (( $EUID != 0 )); then
-        echo "Please run as root."
+        echo "please run as root"
         exit
 fi
 
@@ -10,17 +10,16 @@ fi
 
 echo "WIFI"
 
-# wifi section 
 
 
 # credentials 
-echo "Username: "
+echo "username: "
 read username 
 
-echo "Password: "
+echo "password: "
 read password
 
-echo 'Autoconnect: ("yes" or "no")'
+echo 'autoconnect: ("yes" or "no")'
 read autocon
 
 
@@ -28,10 +27,10 @@ read autocon
 usernamecheck=$( echo $username | grep  \\. )
 
 if [[ $usernamecheck = "" ]]; then
-	echo "Invalid username, try firstname.lastname"
+	echo "invalid username, try firstname.lastname"
+else
+	username=$( echo $username)
 fi
-
-
 
 if [[ $autocon = "no" ]]; then
 	autoconnect=$(echo "false")
@@ -40,11 +39,12 @@ else
 fi
 
 
+
 interface=$(iw dev | awk '$1=="Interface"{print $2}' )
 
 echo $interface
 
-
+nmcli connection delete 'WIRELESS-2.4'
 
 nmcli connection add \
 ipv4.method auto \
@@ -57,15 +57,15 @@ connection.interface-name $interface \
 802-1x.identity $username \
 802-1x.phase2-auth mschapv2  \
 wifi-sec.key-mgmt wpa-eap \
-con-name WIRELESS-2.4 \
+con-name 'WIRELESS-2.4' \
 
 
 
-nmcli connection reload
-
-echo "Connecting to Wi-Fi"
+echo "connecting to wifi"
 nmcli connection up 'WIRELESS-2.4'
 
+echo "please wait"
+wait 5s
 
 ######################################### CERTIFICATE INSTALLATION #################################################
 
@@ -78,6 +78,8 @@ if [[ $Certdir != "certs" ]]; then
 	mkdir certs
 	mkdir certs/imp
 	touch certs/imp/Education-CA.cer
+	touch certs/imp/Education-SubCA1.cer
+	touch certs/imp/Education-SubCA2.cer
 
 	mkdir certs/system-cert
 fi
@@ -85,39 +87,60 @@ fi
 
 
 CA=$(ls /etc/ssl/certs | grep Education-CA);
+SubCA1=$(ls /etc/ssl/certs | grep Education-SubCA1);
+SubCA2=$(ls /etc/ssl/certs | grep Education-SubCA2);
 
 
-DOECheck=$(curl -S https://certs.education.wa.edu.au/);
+
+DOECheck=$(curl -S https://certs.education.wa.edu.au);
 
 echo $DOECheck
 
 
 if [[ $DOECheck = "" ]]; then
-        echo "Could not reach certificate repository, please try connecting to your organisation's WiFi"
+        echo "Could not reach DOE repository, please try connecting to school WiFi"
 	exit
 fi
 
 
 
 if [[ $CA = "Education-CA.pem" ]]; then
-	echo "CA cert located"
+	echo "CA cert found"
 else
 	
-	echo "Installing Edu-CA"
+	echo "installing Edu-CA"
 	curl https://certs.education.wa.edu.au/education-pki/cert/Education-CA.cer > certs/imp/Education-CA.cer
 	openssl x509 -in certs/imp/Education-CA.cer -out certs/system-cert/Education-CA.pem
 	cp certs/system-cert/Education-CA.pem /etc/ssl/certs/
 fi
 
+if [[ $SubCA1 = "Education-SubCA1.pem" ]]; then
+        echo "SubCA1 cert found"
+else
+	echo "installing Edu-Sub-CA1"
+	curl https://certs.education.wa.edu.au/education-pki/cert/Education-SubCA1.cer > certs/imp/Education-SubCA1.cer
+	openssl x509 -in certs/system-cert/Education-SubCA1.cer -out system-cert/Education-SubCA1.pem
+	cp certs/system-cert/Education-SubCA1.pem /etc/ssl/certs/
+
+fi
+
+if [[ $SubCA2 = "Education-SubCA2.pem" ]]; then
+        echo "SubCA2 cert found"
+else
+	
+	echo "installing Edu-SubCA2"
+	curl https://certs.education.wa.edu.au/education-pki/cert/Education-SubCA2.cer > certs/imp/Education-SubCA1.cer
+	openssl x509 -in certs/imp/Education-SubCA1.cer -out certs/system-cert/Education-SubCA2.pem
+	cp certs/system-cert/Education-SubCA2.pem /etc/ssl/certs/
+fi
 
 systemctl restart NetworkManager
 
 ########################################### FEDORA NETWORKING #####################################################
-
 echo "FEDORA"
 
 if (($OSTYPE != "linux-gnu")); then
-	echo "This script is for GNU/Linux only:"
+	echo "this script is for GNU/Linux only:"
 	exit
 fi
 
@@ -127,9 +150,7 @@ if [[ $DNF != "dnf" ]]; then
 	exit
 fi
 
-echo "Please wait..."
 
-sleep 2
 dnf install crypto-policies-scripts -y
 
 update-crypto-policies --set LEGACY
