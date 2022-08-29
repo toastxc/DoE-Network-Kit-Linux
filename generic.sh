@@ -1,7 +1,7 @@
 ################################################## PREREQ ##########################################################
 # sudo checker
 if (( $EUID != 0 )); then
-        echo "please run as root"
+        echo "Please run as root."
         exit
 fi
 
@@ -13,13 +13,13 @@ echo "WIFI"
 
 
 # credentials 
-echo "username: "
+echo "Username: "
 read username 
 
-echo "password: "
+echo "Password: "
 read password
 
-echo 'autoconnect: ("yes" or "no")'
+echo 'Would you like to autoconnect: ("yes" or "no")'
 read autocon
 
 
@@ -27,7 +27,7 @@ read autocon
 usernamecheck=$( echo $username | grep  \\. )
 
 if [[ $usernamecheck = "" ]]; then
-	echo "invalid username, try firstname.lastname"
+	echo "Username invalid, try firstname.lastname."
 else
 	username=$( echo $username)
 fi
@@ -61,10 +61,10 @@ con-name 'WIRELESS-2.4' \
 
 
 
-echo "connecting to wifi"
+echo "Connecting to Wi-Fi..."
 nmcli connection up 'WIRELESS-2.4'
 
-echo "please wait"
+echo "Please wait..."
 wait 5s
 
 ######################################### CERTIFICATE INSTALLATION #################################################
@@ -98,39 +98,39 @@ echo $DOECheck
 
 
 if [[ $DOECheck = "" ]]; then
-        echo "Could not reach DOE repository, please try connecting to school WiFi"
+        echo "Could not reach the certificate repository. Please try connecting to your school's Wi-Fi"
 	exit
 fi
 
 
 
 if [[ $CA = "Education-CA.pem" ]]; then
-	echo "CA cert found"
+	echo "Education-CA cert found locally."
 else
 	
-	echo "installing Edu-CA"
+	echo "Installing Education-CA..."
 	curl https://certs.education.wa.edu.au/education-pki/cert/Education-CA.cer > certs/imp/Education-CA.cer
-	openssl x509 -in certs/imp/Education-CA.cer -out certs/system-cert/Education-CA.pem
+	openssl x509 -inform der -in certs/imp/Education-CA.cer -out certs/system-cert/Education-CA.pem
 	cp certs/system-cert/Education-CA.pem /etc/ssl/certs/
 fi
 
 if [[ $SubCA1 = "Education-SubCA1.pem" ]]; then
-        echo "SubCA1 cert found"
+        echo "Education-SubCA1 cert found locally."
 else
-	echo "installing Edu-Sub-CA1"
+	echo "Installing Education-SubCA1..."
 	curl https://certs.education.wa.edu.au/education-pki/cert/Education-SubCA1.cer > certs/imp/Education-SubCA1.cer
-	openssl x509 -in certs/system-cert/Education-SubCA1.cer -out system-cert/Education-SubCA1.pem
+	openssl x509 -inform der -in certs/system-cert/Education-SubCA1.cer -out system-cert/Education-SubCA1.pem
 	cp certs/system-cert/Education-SubCA1.pem /etc/ssl/certs/
 
 fi
 
 if [[ $SubCA2 = "Education-SubCA2.pem" ]]; then
-        echo "SubCA2 cert found"
+        echo "Education-SubCA2 cert found locally."
 else
 	
-	echo "installing Edu-SubCA2"
+	echo "Installing Education-SubCA2..."
 	curl https://certs.education.wa.edu.au/education-pki/cert/Education-SubCA2.cer > certs/imp/Education-SubCA1.cer
-	openssl x509 -in certs/imp/Education-SubCA1.cer -out certs/system-cert/Education-SubCA2.pem
+	openssl x509 -inform der -in certs/imp/Education-SubCA1.cer -out certs/system-cert/Education-SubCA2.pem
 	cp certs/system-cert/Education-SubCA2.pem /etc/ssl/certs/
 fi
 

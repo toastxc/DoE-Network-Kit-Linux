@@ -16,7 +16,6 @@ A script for implementing security certificates from the Australian Department o
 # Usage
 
 ```
- 
 cd Downloads/
 unzip -q DoE-Network-Kit-Linux-main.zip
 cd DoE-Network-Kit-Linux-main
