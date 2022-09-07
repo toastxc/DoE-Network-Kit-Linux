@@ -69,6 +69,7 @@ wait 5s
 
 ######################################### CERTIFICATE INSTALLATION #################################################
 
+
 echo "CERTIFICATES"
 
 
@@ -77,10 +78,6 @@ Certdir=$(ls | grep certs);
 if [[ $Certdir != "certs" ]]; then
 	mkdir certs
 	mkdir certs/imp
-	touch certs/imp/Education-CA.cer
-	touch certs/imp/Education-SubCA1.cer
-	touch certs/imp/Education-SubCA2.cer
-
 	mkdir certs/system-cert
 fi
 
@@ -89,7 +86,6 @@ fi
 CA=$(ls /etc/ssl/certs | grep Education-CA);
 SubCA1=$(ls /etc/ssl/certs | grep Education-SubCA1);
 SubCA2=$(ls /etc/ssl/certs | grep Education-SubCA2);
-
 
 
 Shencheck=$(curl -S https://enrol.shenton.wa.edu.au);
@@ -109,19 +105,24 @@ if [[ $CA = "Education-CA.pem" ]]; then
 else
 	
 	echo "installing Edu-CA"
+	touch certs/imp/Education-CA.cer
 	curl https://certs.education.wa.edu.au/education-pki/cert/Education-CA.cer > certs/imp/Education-CA.cer
 	openssl x509 -in certs/imp/Education-CA.cer -out certs/system-cert/Education-CA.pem
 	cp certs/system-cert/Education-CA.pem /etc/ssl/certs/
+
+	cp certs/system-cert/Education-CA.pem /etc/pki/ca-trust/source/anchors/
 fi
 
 if [[ $SubCA1 = "Education-SubCA1.pem" ]]; then
         echo "SubCA1 cert found"
 else
 	echo "installing Edu-Sub-CA1"
+	touch certs/imp/Education-SubCA1.cer
 	curl https://certs.education.wa.edu.au/education-pki/cert/Education-SubCA1.cer > certs/imp/Education-SubCA1.cer
-	openssl x509 -in certs/system-cert/Education-SubCA1.cer -out system-cert/Education-SubCA1.pem
+	openssl x509 -in certs/imp/Education-SubCA1.cer -out certs/system-cert/Education-SubCA1.pem
 	cp certs/system-cert/Education-SubCA1.pem /etc/ssl/certs/
 
+	cp certs/system-cert/Education-SubCA1.pem /etc/pki/ca-trust/source/anchors/
 fi
 
 if [[ $SubCA2 = "Education-SubCA2.pem" ]]; then
@@ -129,11 +130,17 @@ if [[ $SubCA2 = "Education-SubCA2.pem" ]]; then
 else
 	
 	echo "installing Edu-SubCA2"
+	touch certs/imp/Education-SubCA2.cer
 	curl https://certs.education.wa.edu.au/education-pki/cert/Education-SubCA2.cer > certs/imp/Education-SubCA1.cer
 	openssl x509 -in certs/imp/Education-SubCA1.cer -out certs/system-cert/Education-SubCA2.pem
 	cp certs/system-cert/Education-SubCA2.pem /etc/ssl/certs/
+
+	cp certs/system-cert/Education-SubCA2.pem /etc/pki/ca-trust/source/anchors/
 fi
 
+
+
+update-ca-trust
 systemctl restart NetworkManager
 
 ########################################### FEDORA NETWORKING #####################################################
@@ -158,3 +165,4 @@ update-crypto-policies --set LEGACY
 update-crypto-policies --set DEFAULT:FEDORA32
 
 systemctl restart NetworkManager
+
