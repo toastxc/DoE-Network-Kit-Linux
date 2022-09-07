@@ -15,8 +15,6 @@ fi
 
 echo "WIFI"
 
-
-
 # credentials 
 echo "username: "
 read username 
@@ -44,7 +42,6 @@ else
 fi
 
 
-
 interface=$(iw dev | awk '$1=="Interface"{print $2}' )
 
 echo $interface
@@ -64,8 +61,6 @@ connection.interface-name $interface \
 wifi-sec.key-mgmt wpa-eap \
 con-name 'WIRELESS-2.4' \
 
-
-
 echo "connecting to wifi"
 nmcli connection up 'WIRELESS-2.4'
 
@@ -74,9 +69,7 @@ wait 5s
 
 ######################################### CERTIFICATE INSTALLATION #################################################
 
-
 echo "CERTIFICATES"
-
 
 Certdir=$(ls | grep certs);
 
@@ -87,22 +80,18 @@ if [[ $Certdir != "certs" ]]; then
 fi
 
 
-
 CA=$(ls /etc/ssl/certs | grep Education-CA);
 SubCA1=$(ls /etc/ssl/certs | grep Education-SubCA1);
 SubCA2=$(ls /etc/ssl/certs | grep Education-SubCA2);
-
 
 Shencheck=$(curl -S https://enrol.shenton.wa.edu.au);
 
 echo $Shencheck
 
-
 if [[ $Shencheck = "" ]]; then
         echo "Could not reach Shenton repository, please try connecting to Shenton WiFi"
 	exit
 fi
-
 
 
 if [[ $CA = "Education-CA.pem" ]]; then
@@ -118,6 +107,7 @@ else
 	cp certs/system-cert/Education-CA.pem /etc/pki/ca-trust/source/anchors/
 fi
 
+
 if [[ $SubCA1 = "Education-SubCA1.pem" ]]; then
         echo "SubCA1 cert found"
 else
@@ -129,6 +119,7 @@ else
 
 	cp certs/system-cert/Education-SubCA1.pem /etc/pki/ca-trust/source/anchors/
 fi
+
 
 if [[ $SubCA2 = "Education-SubCA2.pem" ]]; then
         echo "SubCA2 cert found"
@@ -142,7 +133,6 @@ else
 
 	cp certs/system-cert/Education-SubCA2.pem /etc/pki/ca-trust/source/anchors/
 fi
-
 
 
 update-ca-trust
@@ -165,4 +155,3 @@ update-crypto-policies --set LEGACY
 update-crypto-policies --set DEFAULT:FEDORA32
 
 systemctl restart NetworkManager
-
