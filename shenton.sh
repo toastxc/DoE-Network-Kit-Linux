@@ -1,4 +1,9 @@
 ################################################## PREREQ ##########################################################
+if (($OSTYPE != "linux-gnu")); then
+        echo "this script is for GNU/Linux only:"
+        exit
+fi
+
 # sudo checker
 if (( $EUID != 0 )); then
         echo "please run as root"
@@ -145,11 +150,6 @@ systemctl restart NetworkManager
 
 ########################################### FEDORA NETWORKING #####################################################
 echo "FEDORA"
-
-if (($OSTYPE != "linux-gnu")); then
-	echo "this script is for GNU/Linux only:"
-	exit
-fi
 
 DNF=$(ls /etc/ | grep dnf);
 
