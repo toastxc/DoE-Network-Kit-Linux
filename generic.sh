@@ -1,7 +1,7 @@
 ################################################## PREREQ ##########################################################
 # sudo checker
 if (( $EUID != 0 )); then
-	echo 'Please run as root (try sudo !!)'
+	echo 'Please run as root (try sudo !!).'
         exit
 fi
 
