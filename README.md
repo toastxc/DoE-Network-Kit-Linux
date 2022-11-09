@@ -15,14 +15,14 @@ A script for implementing security certificates from the Australian Department o
 
 # Usage
 
+```bash
+git clone https://github.com/toastxc/DoE-Network-Kit-Linux.git
+cd DoE-Network-Kit-Linux
 ```
-cd Downloads/
-unzip -q DoE-Network-Kit-Linux-main.zip
-cd DoE-Network-Kit-Linux-main
+Choose the script that matches your school (generic for if none apply)
+```bash
 sudo sh generic.sh
 ```
-Choose the script that matches your school
-
 
 # Dependancies
 - OpenSSL
@@ -39,6 +39,6 @@ https://github.com/toastxc/Fedora-Network-Fix
 There are a few rules for contributing to this project
 - Never package certificates, only download them from restricted repositories
 - Test that modified scripts work before running a pull request
-- comment commplicated functions
+- Comment commplicated functions (bash can be hard to read)
 
 ![LGPLv3 Badge](/README_RESOURCES/LGPLv3%20Logo.svg)
