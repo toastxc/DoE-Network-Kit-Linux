@@ -1,12 +1,8 @@
 ################################################## PREREQ ##########################################################
-if (($OSTYPE != "linux-gnu")); then
-        echo "This script is for GNU/Linux only."
-        exit
-fi
 
 # sudo checker
 if (( $EUID != 0 )); then
-        echo "Please run as root."
+	echo "Please run as root (try: sudo !!)."
         exit
 fi
 
@@ -20,7 +16,7 @@ echo "Username: "
 read username 
 
 echo "Password: "
-read password
+read -s password
 
 echo 'Autoconnect: ("yes" or "no")'
 read autocon
@@ -34,6 +30,7 @@ if [[ $usernamecheck = "" ]]; then
 else
 	username=$( echo 'BLUE\'$username)
 fi
+
 
 if [[ $autocon = "no" ]]; then
 	autoconnect=$(echo "false")
@@ -65,7 +62,7 @@ echo "connecting to wifi"
 nmcli connection up 'WIRELESS-2.4'
 
 echo "please wait"
-wait 5s
+wait 3s
 
 ######################################### CERTIFICATE INSTALLATION #################################################
 
