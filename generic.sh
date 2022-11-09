@@ -1,7 +1,7 @@
 ################################################## PREREQ ##########################################################
 # sudo checker
 if (( $EUID != 0 )); then
-        echo "Please run as root."
+	echo 'Please run as root (try sudo !!)'
         exit
 fi
 
@@ -11,13 +11,12 @@ fi
 echo "WIFI"
 
 
-
 # credentials 
 echo "Username: "
 read username 
 
 echo "Password: "
-read password
+read -s password
 
 echo 'Would you like to autoconnect: ("yes" or "no")'
 read autocon
@@ -98,7 +97,7 @@ echo $DOECheck
 
 
 if [[ $DOECheck = "" ]]; then
-        echo "Could not reach the certificate repository. Please try connecting to your school's Wi-Fi"
+        echo "Could not reach the certificate repository. Please try connecting to your school's Wi-Fi."
 	exit
 fi
 
@@ -139,14 +138,11 @@ systemctl restart NetworkManager
 ########################################### FEDORA NETWORKING #####################################################
 echo "FEDORA"
 
-if (($OSTYPE != "linux-gnu")); then
-	echo "this script is for GNU/Linux only:"
-	exit
-fi
 
 DNF=$(ls /etc/ | grep dnf);
 
 if [[ $DNF != "dnf" ]]; then
+	echo "Non RHEL-based system detected, exiting..."
 	exit
 fi
 
