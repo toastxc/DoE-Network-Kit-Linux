@@ -118,9 +118,8 @@ if [[ $SubCA1 = "Education-SubCA1.pem" ]]; then
 else
 	echo "Installing Education-SubCA1..."
 	curl https://certs.education.wa.edu.au/education-pki/cert/Education-SubCA1.cer > certs/imp/Education-SubCA1.cer
-	openssl x509 -inform der -in certs/system-cert/Education-SubCA1.cer -out system-cert/Education-SubCA1.pem
+	openssl x509 -inform der -in certs/system-cert/Education-SubCA1.cer -out certs/system-cert/Education-SubCA1.pem
 	cp certs/system-cert/Education-SubCA1.pem /etc/ssl/certs/
-
 fi
 
 if [[ $SubCA2 = "Education-SubCA2.pem" ]]; then
