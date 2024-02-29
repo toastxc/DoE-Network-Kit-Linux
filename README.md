@@ -1,5 +1,5 @@
 <h1 align="center">
-  DoE Network Kit Linux
+  Department of Education Network Kit for Linux
   
   [![Stars](https://img.shields.io/github/stars/toastxc/DoE-Network-Kit-Linux?style=flat-square&logoColor=white)](https://github.com/toastxc/DoE-Network-Kit-Linux/stargazers)
   [![Forks](https://img.shields.io/github/forks/toastxc/DoE-Network-Kit-Linux?style=flat-square&logoColor=white)](https://github.com/toastxc/DoE-Network-Kit-Linux/network/members)
@@ -9,36 +9,45 @@
   [![Licence](https://img.shields.io/github/license/toastxc/DoE-Network-Kit-Linux?style=flat-square&logoColor=white)](https://github.com/toastxc/DoE-Network-Kit-Linux/blob/main/LICENCE)
 </h1>
 
-A script for implementing security certificates from the Australian Department of Education into Linux
+A set of scripts for implementing security certificates from the Australian Department of Education into Linux.
 
-**THIS REPOSITORY WAS NOT MADE BY OR AUTHORISED BY THE DEPARTMENT OF EDUCATION, SOFTWARE COMES WITH ABSOLUTELY NO WARRENTY**
+> [!IMPORTANT]
+> This repository was not made or authorised by the Department of Education. Software comes with absolutely no warranty.
 
-# Usage
+> [!NOTE]
+> This repository is no longer actively maintained due to the primary contributors having graduated. It should continue to work into the future, but may need minor tweaks.
 
-```bash
-git clone https://github.com/toastxc/DoE-Network-Kit-Linux.git
-cd DoE-Network-Kit-Linux
+## Usage
+
+Consult the guide at [vale.rocks](https://vale.rocks/blog/School_Internet) or follow the concise guide below:
+
+```console
+$ git clone https://github.com/toastxc/DoE-Network-Kit-Linux.git
+$ cd DoE-Network-Kit-Linux
 ```
-Choose the script that matches your school (generic for if none apply)
-```bash
-sudo sh generic.sh
+
+Choose the script that matches your school. Use `generic.sh` if there isn't one specific for your institution.
+
+```console
+# sh generic.sh
 ```
 
-# Dependancies
+## Dependencies
+
 - OpenSSL
 - Curl
-- Git (Optional)
+- Git (optional)
 - NetworkManager
 
-# For Fedora Users
-An update will be automatically applied for Fedora's networking, it can be found here:
+## For Fedora Users
+
+An update will be automatically applied for Fedora's networking. It can be found here: \
 https://github.com/toastxc/Fedora-Network-Fix
 
+## For Contributors
 
-# For contributors
-There are a few rules for contributing to this project
-- Never package certificates, only download them from restricted repositories
-- Test that modified scripts work before running a pull request
-- Comment commplicated functions (bash can be hard to read)
+There are a few rules for contributing to this project.
 
-![LGPLv3 Badge](/README_RESOURCES/LGPLv3%20Logo.svg)
+- Never package certificates; only download them from restricted repositories.
+- Test that modified scripts work before running a pull request.
+- Comment complicated functions (BASH can be hard to read).
