@@ -15,11 +15,11 @@ A set of scripts for implementing security certificates from the Australian Depa
 > This repository was not made or authorised by the Department of Education. Software comes with absolutely no warranty.
 
 > [!NOTE]
-> This repository is no longer actively maintained due to the primary contributors having graduated. It should continue to work into the future, but may need minor tweaks.
+> This repository is no longer actively maintained due to the primary contributors having graduated. It should continue to work into the future but may need minor tweaks. Please feel free to [contact Declan Chidlow](https://vale.rocks/contact) if necessary.
 
 ## Usage
 
-Consult the guide at [vale.rocks](https://vale.rocks/blog/School_Internet) or follow the concise guide below:
+Consult the guide [Connecting to Australian Public School Internet](https://vale.rocks/posts/connecting-to-australian-public-school-internet) or follow this concise guide below:
 
 ```console
 $ git clone https://github.com/toastxc/DoE-Network-Kit-Linux.git
