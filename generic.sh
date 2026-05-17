@@ -91,7 +91,7 @@ SubCA2=$(ls /etc/ssl/certs | grep Education-SubCA2);
 
 
 
-DOECheck=$(curl -S https://certs.education.wa.edu.au);
+DOECheck=$(curl -S https://certs.education.wa.edu.au --insecure);
 
 echo $DOECheck
 
@@ -108,18 +108,18 @@ if [[ $CA = "Education-CA.pem" ]]; then
 else
 	
 	echo "Installing Education-CA..."
-	curl https://certs.education.wa.edu.au/education-pki/cert/Education-CA.cer > certs/imp/Education-CA.cer
+	curl https://certs.education.wa.edu.au/education-pki/cert/Education-CA.cer --insecure > certs/imp/Education-CA.cer
 	openssl x509 -inform der -in certs/imp/Education-CA.cer -out certs/system-cert/Education-CA.pem
-	cp certs/system-cert/Education-CA.pem /etc/ssl/certs/
+	cp certs/system-cert/Education-CA.pem /etc/ca-certificates/trust-source/anchors 
 fi
 
 if [[ $SubCA1 = "Education-SubCA1.pem" ]]; then
         echo "Education-SubCA1 cert found locally."
 else
 	echo "Installing Education-SubCA1..."
-	curl https://certs.education.wa.edu.au/education-pki/cert/Education-SubCA1.cer > certs/imp/Education-SubCA1.cer
+	curl https://certs.education.wa.edu.au/education-pki/cert/Education-SubCA1.cer  --insecure > certs/imp/Education-SubCA1.cer
 	openssl x509 -inform der -in certs/system-cert/Education-SubCA1.cer -out certs/system-cert/Education-SubCA1.pem
-	cp certs/system-cert/Education-SubCA1.pem /etc/ssl/certs/
+	cp certs/system-cert/Education-SubCA1.pem /etc/ca-certificates/trust-source/anchors 
 fi
 
 if [[ $SubCA2 = "Education-SubCA2.pem" ]]; then
@@ -127,11 +127,12 @@ if [[ $SubCA2 = "Education-SubCA2.pem" ]]; then
 else
 	
 	echo "Installing Education-SubCA2..."
-	curl https://certs.education.wa.edu.au/education-pki/cert/Education-SubCA2.cer > certs/imp/Education-SubCA1.cer
+	curl https://certs.education.wa.edu.au/education-pki/cert/Education-SubCA2.cer --insecure > certs/imp/Education-SubCA1.cer
 	openssl x509 -inform der -in certs/imp/Education-SubCA1.cer -out certs/system-cert/Education-SubCA2.pem
-	cp certs/system-cert/Education-SubCA2.pem /etc/ssl/certs/
+	cp certs/system-cert/Education-SubCA2.pem /etc/ca-certificates/trust-source/anchors 
 fi
 
+update-ca-trust extract
 systemctl restart NetworkManager
 
 ########################################### FEDORA NETWORKING #####################################################
